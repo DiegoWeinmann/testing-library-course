@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '../../../test-utils/testing-library-utils'
 import userEvent from '@testing-library/user-event'
+import { OrderDetailsProvider } from '../../../context/OrderDetails'
 import Options from '../Options'
 
 test('update scoop subtotal when scoops change', async () => {
-  render(<Options optionType='scoops' />)
+  render(<Options optionType='scoops' />, {
+    wrapper: OrderDetailsProvider
+  })
 
   // make sure total starts out at $0.00
   const scoopSubtotal = screen.getByText('Scoops total: $', {
@@ -11,7 +14,7 @@ test('update scoop subtotal when scoops change', async () => {
   })
 
   const vanillaInput = await screen.findByRole('spinbutton', {
-    name: 'Vanilla'
+    name: 'Vanilla scoop'
   })
 
   // update vanilla scoop to 1 and check the subtotal
@@ -22,7 +25,7 @@ test('update scoop subtotal when scoops change', async () => {
 
   // update the chocolate scoops to 2 and check subtotal
   const chocolateInput = await screen.findByRole('spinbutton', {
-    name: 'Chocolate'
+    name: 'Chocolate scoop'
   })
 
   userEvent.clear(chocolateInput)

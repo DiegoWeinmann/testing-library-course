@@ -2,7 +2,7 @@ import {
   render,
   screen,
   waitForElementToBeRemoved
-} from '@testing-library/react'
+} from '../../../test-utils/testing-library-utils'
 import userEvent from '@testing-library/user-event'
 import SummaryForm from '../SummaryForm'
 
@@ -55,6 +55,7 @@ test('popover responds to hover', async () => {
   expect(popover).toBeInTheDocument()
 
   // popover disappears when we mouse out
+  userEvent.unhover(termsAndConditions)
   await waitForElementToBeRemoved(() =>
     screen.queryByText(/no ice cream will actually be delivered/i)
   )
